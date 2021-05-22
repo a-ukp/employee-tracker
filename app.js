@@ -182,3 +182,6 @@ function deleteOptions() {
 
 // begin user functions
 // view departments
+function viewEmployees () {
+    
+};
