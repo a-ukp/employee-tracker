@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
     port: 3306,
     user: 'root',
     password: '801151',
-    database: 'emplTracker_db'
+    database: 'employeetracker_db'
 });
 
 // async connect
@@ -30,7 +30,7 @@ function startApp() {
                 'View',
                 'Add',
                 'Update',
-                'Delete'
+                'Delete',
             ]
         }
     ]).then((val) => {
@@ -181,7 +181,96 @@ function deleteOptions() {
 };
 
 // begin user functions
-// view departments
+// view employees
 function viewEmployees () {
-    
+    connection.query("SELECT id, first_name, last_name, role_id, manager_id FROM employee",
+    function(err, res) {
+        if (err) throw err
+        console.table(res)
+        startApp()
+    })
 };
+
+// view roles
+function viewRoles() {
+    connection.query("SELECT id, title, salary, department_id FROM roleTable;",
+    function(err, res) {
+        if (err) throw err
+        console.table(res)
+        startApp()
+    })
+};
+
+// view departments
+function viewDepartments() {
+    connection.query("SELECT id, depName FROM department;",
+    function(err, res) {
+        if (err) throw err
+        console.table(res)
+        startApp()
+    })
+};
+
+// function addEmployee() {
+//     inquirer.prompt([
+//         {
+//             name: "first_name",
+//             type: "input",
+//             message: "Enter first name:"
+//         },
+//         {
+//             name: "last_name",
+//             type: "input",
+//             message: "Enter last name:"
+//         },
+//         {
+//             name: "role",
+//             type: "list",
+//             message: "Select role:",
+//             choices: selectRole()
+//         },
+//         {
+//             name: "manager",
+//             type: "list",
+//             message: "Select manager:",
+//             choices: selectManager()
+//         },
+//     ]).then((val) => {
+//         var roleID = selectRole().indexOf(val.role) + 1
+//         var managerID = selectManager().indexOf(val.choice) + 1
+//         connection.query("INSERT INTO employee SET ?",
+//         {
+//             first_name: val.first_name,
+//             last_name: val.last_name,
+//             manager_id: managerID,
+//             role_id: roleID
+//         }, function(err) {
+//             if (err) throw err
+//             console.table(val)
+//             startApp()
+//         })
+//     })
+// };
+
+// function addDepartment() { 
+//     inquirer.prompt([
+//         {
+//           name: "name",
+//           type: "input",
+//           message: "What Department would you like to add?"
+//         }
+//     ]).then(function(res) {
+//         var query = connection.query(
+//             "INSERT INTO department SET ? ",
+//             {
+//               name: res.name
+            
+//             },
+//             function(err) {
+//                 if (err) throw err
+//                 console.table(res);
+//                 startPrompt();
+//             }
+//         )
+//     })
+//   };
